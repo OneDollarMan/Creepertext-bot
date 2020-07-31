@@ -18,7 +18,7 @@ class PasteRepository:
 		if not self.connection.open:
 			self.connect()
 		try:
-			cursor.execute('SELECT 1')
+			self.connection.cursor().execute('SELECT 1')
 		except pymysql.err.OperationalError:
 			self.connect()
 		return self.connection.cursor()
