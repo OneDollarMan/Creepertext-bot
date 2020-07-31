@@ -14,18 +14,21 @@ class PasteRepository:
 	def connect(self):
 		self.connection = pymysql.connect(host=self.host, user=self.user, password=self.password, db=self.db, port=self.port, charset=self.charset)
 
-	def isPasteExists(self, title):
-		if self.connection.open is not True:
+	def getCursor(self):
+		if not self.connection.open:
+			print('opening closed connection')
 			self.connect()
-		with self.connection.cursor() as cursor:
+		print(self.connection.open)
+		return self.connection.cursor()
+
+	def isPasteExists(self, title):
+		with self.getCursor() as cursor:
 			query = 'SELECT * FROM paste WHERE title = "%s"'
 			cursor.execute(query, title)
 			return cursor.fetchone() is not None
 
 	def savePaste(self, paste):
-		if self.connection.open is not True:
-			self.connect()
-		with self.connection.cursor() as cursor:
+		with self.getCursor() as cursor:
 			if not self.isPasteExists(paste['title']):
 				query = 'INSERT INTO paste (title, content, rating, popularity, source, url) VALUES (%s, %s, %s, %s, %s, %s)'
 				cursor.execute(query, (paste['title'], paste['content'], paste['rating'], paste['popularity'], paste['source'], paste['url']))
@@ -34,9 +37,7 @@ class PasteRepository:
 			return False
 
 	def getRandomPaste(self):
-		if self.connection.open is not True:
-			self.connect()
-		with self.connection.cursor() as cursor:
+		with self.getCursor() as cursor:
 			query = 'SELECT * FROM paste ORDER BY RAND() LIMIT 1'
 			cursor.execute(query)
 			return cursor.fetchone()
