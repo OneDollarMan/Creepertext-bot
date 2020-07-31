@@ -39,5 +39,9 @@ class PasteRepository:
 	def getRandomPaste(self):
 		with self.getCursor() as cursor:
 			query = 'SELECT * FROM paste ORDER BY RAND() LIMIT 1'
-			cursor.execute(query)
+			try:
+				cursor.execute(query)
+			except pymysql.err.OperationalError:
+				self.connect()
+				cursor.execute(query)
 			return cursor.fetchone()
