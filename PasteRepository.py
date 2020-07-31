@@ -9,7 +9,7 @@ class PasteRepository:
 		self.db=db
 		self.port=port
 		self.charset=charset
-		connect()
+		self.connect()
 
 	def connect(self):
 		self.connection = pymysql.connect(host=self.host, user=self.user, password=self.password, db=self.db, port=self.port, charset=self.charset)
