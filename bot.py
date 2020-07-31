@@ -44,7 +44,9 @@ def main():
 
 	startCommand = '/start'
 	newPasteCommand = '/new'
+	howmuchCommand = '/howmuch'
 	startMessage = 'Здравствуйте! Это бот крипипаст. Чтобы получить пасту введите ' + newPasteCommand
+	howmuchMessage = 'В базе {} крипипаст'
 	new_offset = None
 
 	while True:
@@ -63,6 +65,8 @@ def main():
 			elif last_chat_text.lower() == newPasteCommand:
 				bot.send_paste(chat_id = last_chat_id, paste = pasteRepo.getRandomPaste(), username = last_update['message']['from']['username'])
 
+			elif last_chat_text.lower() == howmuchCommand:
+				bot.send_message(last_chat_id, howmuchMessage.format(pasteRepo.getPasteCount()))
 			new_offset = last_update_id + 1
 
 

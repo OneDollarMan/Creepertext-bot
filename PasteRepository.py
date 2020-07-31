@@ -43,3 +43,9 @@ class PasteRepository:
 			query = 'SELECT * FROM paste ORDER BY RAND() LIMIT 1'
 			cursor.execute(query)
 			return cursor.fetchone()
+
+	def getPasteCount(self):
+		with self.getCursor() as cursor:
+			query = 'SELECT COUNT(*) FROM pet'
+			cursor.execute(query)
+			return cursor.fetchone()
