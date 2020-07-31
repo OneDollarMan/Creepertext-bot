@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 import requests  
 from PasteRepository import *
 
@@ -34,7 +35,12 @@ def main():
 
 	token = '1392358861:AAFI0wi2OBxT3dpdKZa-CL_koafqiUpiwi4'
 	bot = TelegramBot(token, 4096)
-	pasteRepo = PasteRepository('localhost', 'root', 'gmfk2ASD', 'Pastes', 3306, 'utf8mb4')
+	pasteRepo = PasteRepository(host = 'us-cdbr-east-02.cleardb.com', 
+								user = 'b5f960db739924', 
+								password = '691e3887', 
+								db = 'heroku_0bac419e35bfd6e', 
+								port = 3306, 
+								charset = 'utf8mb4')
 
 	startCommand = '/start'
 	newPasteCommand = '/new'
