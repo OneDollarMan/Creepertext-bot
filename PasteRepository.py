@@ -16,9 +16,11 @@ class PasteRepository:
 
 	def getCursor(self):
 		if not self.connection.open:
-			print('opening closed connection')
 			self.connect()
-		print(self.connection.open)
+		try:
+			cursor.execute('SELECT 1')
+		except pymysql.err.OperationalError:
+			self.connect()
 		return self.connection.cursor()
 
 	def isPasteExists(self, title):
@@ -39,8 +41,5 @@ class PasteRepository:
 	def getRandomPaste(self):
 		with self.getCursor() as cursor:
 			query = 'SELECT * FROM paste ORDER BY RAND() LIMIT 1'
-			try:
-				cursor.execute(query)
-			except pymysql.err.OperationalError:
-				self.connect()
+			cursor.execute(query)
 			return cursor.fetchone()
