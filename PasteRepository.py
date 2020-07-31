@@ -46,6 +46,6 @@ class PasteRepository:
 
 	def getPasteCount(self):
 		with self.getCursor() as cursor:
-			query = 'SELECT COUNT(*) FROM pet'
+			query = 'SELECT COUNT(*) FROM paste'
 			cursor.execute(query)
 			return cursor.fetchone()
