@@ -48,4 +48,4 @@ class PasteRepository:
 		with self.getCursor() as cursor:
 			query = 'SELECT COUNT(*) FROM paste'
 			cursor.execute(query)
-			return cursor.fetchone()
+			return cursor.fetchone()[0]
