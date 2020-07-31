@@ -16,7 +16,7 @@ class PasteRepository:
 
 	def isPasteExists(self, title):
 		if self.connection.open is not True:
-			connect()
+			self.connect()
 		with self.connection.cursor() as cursor:
 			query = 'SELECT * FROM paste WHERE title = "%s"'
 			cursor.execute(query, title)
@@ -24,7 +24,7 @@ class PasteRepository:
 
 	def savePaste(self, paste):
 		if self.connection.open is not True:
-			connect()
+			self.connect()
 		with self.connection.cursor() as cursor:
 			if not self.isPasteExists(paste['title']):
 				query = 'INSERT INTO paste (title, content, rating, popularity, source, url) VALUES (%s, %s, %s, %s, %s, %s)'
@@ -35,7 +35,7 @@ class PasteRepository:
 
 	def getRandomPaste(self):
 		if self.connection.open is not True:
-			connect()
+			self.connect()
 		with self.connection.cursor() as cursor:
 			query = 'SELECT * FROM paste ORDER BY RAND() LIMIT 1'
 			cursor.execute(query)
