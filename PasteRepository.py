@@ -41,7 +41,7 @@ class PasteRepository:
 			query = 'SELECT * FROM paste ORDER BY RAND() LIMIT 1'
 			try:
 				cursor.execute(query)
-			except pymysql.err.OperationalError:
+			except OperationalError:
 				self.connect()
 				cursor.execute(query)
 			return cursor.fetchone()
