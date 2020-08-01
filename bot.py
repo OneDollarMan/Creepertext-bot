@@ -29,13 +29,13 @@ class TelegramBot:
 
     def send_paste(self, chat_id, paste, username):
         print('sent ' + paste[1] + ' to @' + username)
-        self.send_message(chat_id=chat_id, text=paste[1] + ' \n' + paste[5])
+        self.send_message(chat_id=chat_id, text=paste[1] + ' \n' + paste[3])
 
 
 def main():
     c = configparser.ConfigParser()
     c.read('configuration.ini')
-    bot = TelegramBot(c['telegram']['token'])
+    bot = TelegramBot(c['telegram']['telegram_token'])
     pasteRepo = PasteRepository(host=c['db']['host'],
                                 user=c['db']['user'],
                                 password=c['db']['password'],

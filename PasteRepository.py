@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 import pymysql
 
 
@@ -22,9 +23,7 @@ class PasteRepository:
                 query = """CREATE TABLE `paste` (
                 `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
                 `title` text NOT NULL,
-                `content` longtext NOT NULL,
                 `rating` text NOT NULL,
-                `source` text NOT NULL,
                 `url` text NOT NULL,
                 `popularity` text NOT NULL,
                 PRIMARY KEY (`id`),
@@ -32,7 +31,6 @@ class PasteRepository:
                 ) ENGINE=InnoDB AUTO_INCREMENT=0 DEFAULT CHARSET=utf8mb4"""
                 cursor.execute(query)
                 self.connection.commit()
-
 
     def getCursor(self):
         if not self.connection.open:
@@ -52,9 +50,8 @@ class PasteRepository:
     def savePaste(self, paste):
         with self.getCursor() as cursor:
             if not self.isPasteExists(paste['title']):
-                query = 'INSERT INTO paste (title, content, rating, popularity, source, url) VALUES (%s, %s, %s, %s, %s, %s)'
-                cursor.execute(query, (
-                paste['title'], paste['content'], paste['rating'], paste['popularity'], paste['source'], paste['url']))
+                query = 'INSERT INTO paste (title, rating, popularity, url) VALUES (%s, %s, %s, %s)'
+                cursor.execute(query, (paste['title'], paste['rating'], paste['popularity'], paste['url']))
                 self.connection.commit()
                 return True
             return False
@@ -70,3 +67,9 @@ class PasteRepository:
             query = 'SELECT COUNT(*) FROM paste'
             cursor.execute(query)
             return cursor.fetchone()[0]
+
+    def get_all(self):
+        with self.getCursor() as cursor:
+            query = 'SELECT * FROM paste LIMIT 106 OFFSET 294'
+            cursor.execute(query)
+            return cursor.fetchall()

@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 from time import sleep
 import requests
 from PasteRepository import *
@@ -8,7 +9,7 @@ import configparser
 c = configparser.ConfigParser()
 c.read('configuration.ini')
 TOKEN = c['telegram']['telegraph_token']
-API_URL = 'https://api.telegra.ph/'
+API_URL = c['telegram']['telegraph_api']
 
 
 def get():
@@ -55,20 +56,37 @@ def load_to_telegraph(paste):
         return resp.json()['result']['url']
 
 
+def add_author_telegraph(paste):
+    method = 'editPage'
+    params = {"access_token": TOKEN,
+              "title": paste[1],
+              "content": '["{}"]'.format(paste[2]),
+              "author_url": paste[4],
+              "author_name": 'Mrakopedia'}
+    url = parse('https://telegra.ph/{}', paste[5])
+    resp = requests.post(API_URL + method + '/' + url[0], data=params, timeout=60)
+    print(resp.url)
+    print(resp.json())
+
+
 def main():
     paste_repo = PasteRepository(host=c['db']['host'],
                                  user=c['db']['user'],
                                  password=c['db']['password'],
                                  db=c['db']['db'],
                                  port=c['db']['port'])
-
-    while True:
+    i = 1
+    while i == 1:
         paste = get()
         if paste is not None:
             if paste_repo.savePaste(paste) is True:
                 print('saved ' + paste['title'])
 
             sleep(10)
+
+    for paste in paste_repo.get_all():
+        add_author_telegraph(paste)
+        sleep(1)
 
 
 if __name__ == '__main__':
