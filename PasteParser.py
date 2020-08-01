@@ -1,49 +1,78 @@
+from time import sleep
 import requests
 from PasteRepository import *
 from parse import *
-from urllib.parse import quote
 from bs4 import BeautifulSoup
+import configparser
+
+c = configparser.ConfigParser()
+c.read('configuration.ini')
+TOKEN = c['telegram']['telegraph_token']
+API_URL = 'https://api.telegra.ph/'
 
 
-class PasteParser:
+def get():
+    html = get_html('https://mrakopedia.net/wiki/Служебная:Случайная_страница')
+    paste = parse_html(html)
+    url = load_to_telegraph(paste)
+    if url is not None:
+        paste['url'] = url
+        return paste
 
-	def __init__(self, token):
-		self.token = token
-		self.api_url = 'https://api.telegra.ph/'
 
-	def getPaste(self):
-		resp = requests.get('https://mrakopedia.net/wiki/Служебная:Случайная_страница', timeout=30)
-		soup = BeautifulSoup(resp.text, features="html.parser")
-		title = soup.h1
-		content = soup.find('div', id = 'mw-content-text')
-		for div in content.find_all({'div', 'script'}):
-			div.decompose()
+def get_html(url):
+    resp = requests.get(url, timeout=30)
+    global SOURCE
+    SOURCE = resp.url
+    return BeautifulSoup(resp.text, features="html.parser")
 
-		rating = soup.find('span', id = 'w4g_rb_area-1')
-		if title is not None and content is not None and rating is not None:
-			method = 'createPage'
-			params = {"access_token": self.token, "title": title.text, "content": '["{}"]'.format(content.text), "author_url": resp.url, "author_name": 'Mrakopedia'}
-			resp2 = requests.post(self.api_url + method, data = params, timeout = 60)
-			print(resp2.json())
-			if resp2.json()['ok'] is True:
-				ratingint = parse('Текущий рейтинг: {}/100 (На основе {} мнений)', rating.text)
-				return {'title': title.text, 'content': content.text, 'rating': ratingint[0], 'popularity': ratingint[1],'source': resp.url, 'url': resp2.json()['result']['url']}
+
+def parse_html(html):
+    title = html.h1
+    content = html.find('div', id='mw-content-text')
+    for a in content.find_all({'div', 'script'}):
+        a.decompose()
+
+    rating = parse('Текущий рейтинг: {}/100 (На основе {} мнений)', html.find('span', id='w4g_rb_area-1').text)
+    if title is not None and content is not None and rating is not None:
+        return {'title': title.text,
+                'content': content.text,
+                'rating': rating[0],
+                'popularity': rating[1],
+                'source': SOURCE}
+
+
+def load_to_telegraph(paste):
+    method = 'createPage'
+    params = {"access_token": TOKEN,
+              "title": paste['title'],
+              "content": '["{}"]'.format(paste['content']),
+              "author_url": paste['source'],
+              "author_name": 'Mrakopedia'}
+    resp = requests.post(API_URL + method, data=params, timeout=60)
+    print(resp.json())
+    if resp.json()['ok'] is True:
+        return resp.json()['result']['url']
 
 
 def main():
-	telegraph_token = '11cfcc993a67db3565657e5c4c4b0fd1f265604f2d384fdae584641ea13a'
-	pasteParser = PasteParser(telegraph_token)
-	pasteRepo = PasteRepository('localhost', 'root', 'gmfk2ASD', 'Pastes', 3306, 'utf8mb4')
+    paste_repo = PasteRepository(host=c['db']['host'],
+                                 user=c['db']['user'],
+                                 password=c['db']['password'],
+                                 db=c['db']['db'],
+                                 port=c['db']['port'])
 
-	while True:
-		paste = pasteParser.getPaste()
-		if paste is not None:
-			if pasteRepo.savePaste(paste) is True:
-				print('saved ' + paste['title'])
+    while True:
+        paste = get()
+        if paste is not None:
+            if paste_repo.savePaste(paste) is True:
+                print('saved ' + paste['title'])
+
+            sleep(10)
 
 
 if __name__ == '__main__':
-	try:
-		main()
-	except KeyboardInterrupt:
-		exit()
+    try:
+        main()
+    except KeyboardInterrupt:
+        exit()
