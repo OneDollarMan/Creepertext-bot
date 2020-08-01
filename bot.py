@@ -2,6 +2,7 @@
 import requests
 from PasteRepository import *
 import configparser
+import os.path
 
 
 class TelegramBot:
@@ -35,6 +36,8 @@ class TelegramBot:
 def main():
     c = configparser.ConfigParser()
     c.read('configuration.ini')
+    if os.path.isfile('./configuration.mine.ini'):
+        c.read('configuration.mine.ini')
     bot = TelegramBot(c['telegram']['telegram_token'])
     pasteRepo = PasteRepository(host=c['db']['host'],
                                 user=c['db']['user'],
