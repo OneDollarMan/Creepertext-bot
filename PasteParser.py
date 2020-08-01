@@ -15,10 +15,11 @@ API_URL = c['telegram']['telegraph_api']
 def get():
     html = get_html('https://mrakopedia.net/wiki/Служебная:Случайная_страница')
     paste = parse_html(html)
-    url = load_to_telegraph(paste)
-    if url is not None:
-        paste['url'] = url
-        return paste
+    if paste is not None:
+        url = load_to_telegraph(paste)
+        if url is not None:
+            paste['url'] = url
+            return paste
 
 
 def get_html(url):
@@ -33,14 +34,15 @@ def parse_html(html):
     content = html.find('div', id='mw-content-text')
     for a in content.find_all({'div', 'script'}):
         a.decompose()
-
-    rating = parse('Текущий рейтинг: {}/100 (На основе {} мнений)', html.find('span', id='w4g_rb_area-1').text)
-    if title is not None and content is not None and rating is not None:
-        return {'title': title.text,
-                'content': content.text,
-                'rating': rating[0],
-                'popularity': rating[1],
-                'source': SOURCE}
+    rating_raw = html.find('span', id='w4g_rb_area-1')
+    if rating_raw is not None:
+        rating = parse('Текущий рейтинг: {}/100 (На основе {} мнений)', rating_raw.text)
+        if title is not None and content is not None and rating is not None:
+            return {'title': title.text,
+                    'content': content.text,
+                    'rating': rating[0],
+                    'popularity': rating[1],
+                    'source': SOURCE}
 
 
 def load_to_telegraph(paste):

@@ -70,6 +70,6 @@ class PasteRepository:
 
     def get_all(self):
         with self.getCursor() as cursor:
-            query = 'SELECT * FROM paste LIMIT 106 OFFSET 294'
+            query = 'SELECT * FROM paste'
             cursor.execute(query)
             return cursor.fetchall()
