@@ -63,7 +63,7 @@ def main():
             if 'username' in last_update['message']['from']:
                 username = last_update['message']['from']['username']
             else:
-                username = last_update['message']['from']['id']
+                username = str(last_update['message']['from']['id'])
 
             if last_chat_text.lower() == startCommand:
                 paste_repo.save_user(username=username)
