@@ -1,12 +1,11 @@
 # -*- coding: utf-8 -*-
 from time import sleep
 import requests
-from PasteRepository import *
+from PostgresqlRepo import *
 from parse import *
 from bs4 import BeautifulSoup
 import configparser
 import os.path
-
 
 c = configparser.ConfigParser()
 c.read('configuration.ini')
@@ -16,9 +15,9 @@ TOKEN = c['telegram']['telegraph_token']
 API_URL = c['telegram']['telegraph_api']
 
 
-def get():
+def get_paste():
     html = get_html('https://mrakopedia.net/wiki/Служебная:Случайная_страница')
-    paste = parse_html(html)
+    paste = parse_paste_from_html(html)
     if paste is not None:
         url = load_to_telegraph(paste)
         if url is not None:
@@ -33,7 +32,7 @@ def get_html(url):
     return BeautifulSoup(resp.text, features="html.parser")
 
 
-def parse_html(html):
+def parse_paste_from_html(html):
     title = html.h1
     content = html.find('div', id='mw-content-text')
     for a in content.find_all({'div', 'script'}):
@@ -76,23 +75,18 @@ def add_author_telegraph(paste):
 
 
 def main():
-    paste_repo = PasteRepository(host=c['db']['host'],
-                                 user=c['db']['user'],
-                                 password=c['db']['password'],
-                                 db=c['db']['db'],
-                                 port=c['db']['port'])
-    i = 1
-    while i == 1:
-        paste = get()
+    paste_repo = PostgresqlRepo(host=c['db']['host'],
+                                user=c['db']['user'],
+                                password=c['db']['password'],
+                                db=c['db']['db'],
+                                port=c['db']['port'])
+
+    while True:
+        paste = get_paste()
         if paste is not None:
-            if paste_repo.savePaste(paste) is True:
+            if paste_repo.save_paste(paste) is True:
                 print('saved ' + paste['title'])
-
-            sleep(10)
-
-    for paste in paste_repo.get_all():
-        add_author_telegraph(paste)
-        sleep(1)
+        sleep(10)
 
 
 if __name__ == '__main__':
