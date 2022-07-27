@@ -1,16 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="44a98619-d96c-4067-be86-e3b85b3f2bec" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/PostgresqlRepo.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/creepertext-bot.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/creepertext-bot.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+    <list default="true" id="44a98619-d96c-4067-be86-e3b85b3f2bec" name="Default Changelist" comment="moving from mysql to postgresql">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/PasteParser.py" beforeDir="false" afterPath="$PROJECT_DIR$/PasteParser.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PasteRepository.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/PostgresqlRepo.py" beforeDir="false" afterPath="$PROJECT_DIR$/PostgresqlRepo.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/bot.py" beforeDir="false" afterPath="$PROJECT_DIR$/bot.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/configuration.mine.ini" beforeDir="false" afterPath="$PROJECT_DIR$/configuration.mine.ini" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/requirements.txt" beforeDir="false" afterPath="$PROJECT_DIR$/requirements.txt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -151,7 +146,14 @@
       <option name="project" value="LOCAL" />
       <updated>1596302557662</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="moving from mysql to postgresql">
+      <created>1658920781209</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1658920781209</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
@@ -200,7 +202,8 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="improved parser" />
-    <option name="LAST_COMMIT_MESSAGE" value="improved parser" />
+    <MESSAGE value="moving from mysql to postgresql" />
+    <option name="LAST_COMMIT_MESSAGE" value="moving from mysql to postgresql" />
   </component>
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/requirements.txt">

@@ -35,14 +35,16 @@ def main():
     c = configparser.ConfigParser()
     if os.path.isfile('./configuration.mine.ini'):
         c.read('configuration.mine.ini')
+        bot = TelegramBot(c['telegram']['telegram_token'])
+        paste_repo = PostgresqlRepo(host=c['db']['host'],
+                                    user=c['db']['user'],
+                                    password=c['db']['password'],
+                                    db=c['db']['db'],
+                                    port=c['db']['port'])
     else:
-        c.read('configuration.ini')
-    bot = TelegramBot(c['telegram']['telegram_token'])
-    paste_repo = PostgresqlRepo(host=c['db']['host'],
-                                user=c['db']['user'],
-                                password=c['db']['password'],
-                                db=c['db']['db'],
-                                port=c['db']['port'])
+        bot = TelegramBot(os.environ['TELEGRAM_TOKEN'])
+        paste_repo = PostgresqlRepo(os.environ['DATABASE_URL'])
+
     startCommand = '/start'
     newPasteCommand = '/new'
     howmuchCommand = '/howmuch'

@@ -4,19 +4,23 @@ import psycopg2
 
 class PostgresqlRepo:
 
-    def __init__(self, host, user, password, db, port):
+    def __init__(self, url=None, host=None, user=None, password=None, db=None, port=None):
+        self.url = url
         self.host = host
         self.user = user
         self.password = password
         self.db = db
-        self.port = int(port)
+        self.port = port
         self.connection = None
         self.cursor = None
         self.connect()
 
     def connect(self):
-        self.connection = psycopg2.connect(host=self.host, user=self.user, password=self.password, database=self.db,
-                                           port=self.port)
+        if self.url is not None:
+            self.connection = psycopg2.connect(self.url)
+        else:
+            self.connection = psycopg2.connect(host=self.host, user=self.user, password=self.password, database=self.db,
+                                               port=self.port)
         self.cursor = self.connection.cursor()
         self.create_tables()
 

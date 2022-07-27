@@ -8,11 +8,12 @@ import configparser
 import os.path
 
 c = configparser.ConfigParser()
-c.read('configuration.ini')
 if os.path.isfile('./configuration.mine.ini'):
     c.read('configuration.mine.ini')
-TOKEN = c['telegram']['telegraph_token']
-API_URL = c['telegram']['telegraph_api']
+    TOKEN = c['telegram']['telegraph_token']
+else:
+    TOKEN = os.environ["TELEGRAPH_TOKEN"]
+API_URL = 'https://api.telegra.ph/'
 
 
 def get_paste():
