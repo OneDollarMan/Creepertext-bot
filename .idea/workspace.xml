@@ -4,8 +4,6 @@
     <list default="true" id="44a98619-d96c-4067-be86-e3b85b3f2bec" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/PasteParser.py" beforeDir="false" afterPath="$PROJECT_DIR$/PasteParser.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PostgresqlRepo.py" beforeDir="false" afterPath="$PROJECT_DIR$/PostgresqlRepo.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/bot.py" beforeDir="false" afterPath="$PROJECT_DIR$/bot.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -160,7 +158,21 @@
       <option name="project" value="LOCAL" />
       <updated>1658923181168</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="parser env vars and username bug fix">
+      <created>1658925676743</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1658925676743</updated>
+    </task>
+    <task id="LOCAL-00005" summary="username bug fix">
+      <created>1658925892492</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1658925892492</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
@@ -211,7 +223,9 @@
     <MESSAGE value="improved parser" />
     <MESSAGE value="moving from mysql to postgresql" />
     <MESSAGE value="environ vars instead of config file" />
-    <option name="LAST_COMMIT_MESSAGE" value="environ vars instead of config file" />
+    <MESSAGE value="parser env vars and username bug fix" />
+    <MESSAGE value="username bug fix" />
+    <option name="LAST_COMMIT_MESSAGE" value="username bug fix" />
   </component>
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/requirements.txt">

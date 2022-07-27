@@ -67,10 +67,9 @@ def load_to_telegraph(paste):
     res = resp.json()
     print(res)
     if res['ok'] is True:
-        print(paste)
         return res['result']['url']
     elif res['error'] == 'CONTENT_TEXT_REQUIRED':
-        print(paste)
+        print('poeli govna...')
     elif res['error'][:5] == 'FLOOD':
         secs = res['error'][-4:]
         print('waiting for', secs)
