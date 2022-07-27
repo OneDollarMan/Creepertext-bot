@@ -11,8 +11,14 @@ c = configparser.ConfigParser()
 if os.path.isfile('./configuration.mine.ini'):
     c.read('configuration.mine.ini')
     TOKEN = c['telegram']['telegraph_token']
+    paste_repo = PostgresqlRepo(host=c['db']['host'],
+                                user=c['db']['user'],
+                                password=c['db']['password'],
+                                db=c['db']['db'],
+                                port=c['db']['port'])
 else:
-    TOKEN = os.environ["TELEGRAPH_TOKEN"]
+    TOKEN = os.environ['TELEGRAPH_TOKEN']
+    paste_repo = os.environ['DATABASE_URL']
 API_URL = 'https://api.telegra.ph/'
 
 
@@ -53,13 +59,22 @@ def load_to_telegraph(paste):
     method = 'createPage'
     params = {"access_token": TOKEN,
               "title": paste['title'],
-              "content": '["{}"]'.format(paste['content']),
+              "author_name": 'Mrakopedia',
               "author_url": paste['source'],
-              "author_name": 'Mrakopedia'}
+              "content": '["{}"]'.format(paste['content'].rstrip()),
+              }
     resp = requests.post(API_URL + method, data=params, timeout=60)
-    print(resp.json())
-    if resp.json()['ok'] is True:
-        return resp.json()['result']['url']
+    res = resp.json()
+    print(res)
+    if res['ok'] is True:
+        print(paste)
+        return res['result']['url']
+    elif res['error'] == 'CONTENT_TEXT_REQUIRED':
+        print(paste)
+    elif res['error'][:5] == 'FLOOD':
+        secs = res['error'][-4:]
+        print('waiting for', secs)
+        sleep(int(secs))
 
 
 def add_author_telegraph(paste):
@@ -76,18 +91,12 @@ def add_author_telegraph(paste):
 
 
 def main():
-    paste_repo = PostgresqlRepo(host=c['db']['host'],
-                                user=c['db']['user'],
-                                password=c['db']['password'],
-                                db=c['db']['db'],
-                                port=c['db']['port'])
-
     while True:
         paste = get_paste()
         if paste is not None:
             if paste_repo.save_paste(paste) is True:
                 print('saved ' + paste['title'])
-        sleep(10)
+        sleep(1)
 
 
 if __name__ == '__main__':

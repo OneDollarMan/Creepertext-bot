@@ -60,7 +60,10 @@ def main():
         if last_update is not None and 'message' in last_update:
             last_chat_text = last_update['message']['text']
             last_chat_id = last_update['message']['chat']['id']
-            username = last_update['message']['from']['username']
+            if 'username' in last_update['message']['from']:
+                username = last_update['message']['from']['username']
+            else:
+                username = last_update['message']['from']['id']
 
             if last_chat_text.lower() == startCommand:
                 paste_repo.save_user(username=username)

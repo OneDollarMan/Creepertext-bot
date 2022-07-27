@@ -45,8 +45,8 @@ class PostgresqlRepo:
         self.connection.commit()
 
     def is_paste_exists(self, title):
-        query = 'SELECT * FROM paste WHERE title = "%s"'
-        self.cursor.execute(query, title)
+        query = 'SELECT * FROM paste WHERE title = %s'
+        self.cursor.execute(query, (title,))
         return self.cursor.fetchone() is not None
 
     def save_paste(self, paste):
