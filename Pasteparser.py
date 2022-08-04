@@ -65,7 +65,6 @@ class Pasteparser(Thread):
                   }
         resp = requests.post(self.api_url + method, data=params, timeout=60)
         res = resp.json()
-        print(res)
         if res['ok'] is True:
             return res['result']['url']
         elif res['error'] == 'CONTENT_TEXT_REQUIRED':

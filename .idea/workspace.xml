@@ -1,20 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="44a98619-d96c-4067-be86-e3b85b3f2bec" name="Default Changelist" comment="username bug fix">
-      <change afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Commands.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Controller.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/messages.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/creepertext-bot.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/creepertext-bot.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PasteParser.py" beforeDir="false" afterPath="$PROJECT_DIR$/Pasteparser.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PostgresqlRepo.py" beforeDir="false" afterPath="$PROJECT_DIR$/Repo.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Procfile" beforeDir="false" afterPath="$PROJECT_DIR$/Procfile" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/bot.py" beforeDir="false" afterPath="$PROJECT_DIR$/Bot.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/requirements.txt" beforeDir="false" afterPath="$PROJECT_DIR$/requirements.txt" afterDir="false" />
+    <list default="true" id="44a98619-d96c-4067-be86-e3b85b3f2bec" name="Default Changelist" comment="parser and bot as dedicated thread, improved command handling">
+      <change beforePath="$PROJECT_DIR$/Commands.py" beforeDir="false" afterPath="$PROJECT_DIR$/Commands.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -260,7 +248,14 @@
       <option name="project" value="LOCAL" />
       <updated>1658925892492</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="parser and bot as dedicated thread, improved command handling">
+      <created>1659651831004</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1659651831004</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
@@ -313,7 +308,8 @@
     <MESSAGE value="environ vars instead of config file" />
     <MESSAGE value="parser env vars and username bug fix" />
     <MESSAGE value="username bug fix" />
-    <option name="LAST_COMMIT_MESSAGE" value="username bug fix" />
+    <MESSAGE value="parser and bot as dedicated thread, improved command handling" />
+    <option name="LAST_COMMIT_MESSAGE" value="parser and bot as dedicated thread, improved command handling" />
   </component>
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/requirements.txt">

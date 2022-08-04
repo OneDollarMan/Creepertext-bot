@@ -50,7 +50,8 @@ class Commands:
         res = ''
         for i in range(len(top_ten)):
             res += '[{}. {}]({}) - {}\n'.format(i + 1, top_ten[i][1], top_ten[i][3], top_ten[i][2])
-        print(self.controller.send_message_with_keyboard(self.controller.id, res, 'markdown',
-                                                         {'inline_keyboard':
-                                                              [[{'text': 'Назад', 'callback_data': '1'}, {'text': 'Вперед', 'callback_data': '2'}]]
-                                                          }).text)
+        self.controller.send_message_with_keyboard(self.controller.id, res, 'markdown',
+                                                   {'inline_keyboard':
+                                                        [[{'text': 'Назад', 'callback_data': '1'},
+                                                          {'text': 'Вперед', 'callback_data': '2'}]]
+                                                    })
