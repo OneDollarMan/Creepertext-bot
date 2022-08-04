@@ -2,7 +2,7 @@
 import psycopg2
 
 
-class PostgresqlRepo:
+class Repo:
 
     def __init__(self, url=None, host=None, user=None, password=None, db=None, port=None):
         self.url = url
@@ -50,12 +50,10 @@ class PostgresqlRepo:
         return self.cursor.fetchone() is not None
 
     def save_paste(self, paste):
-        if not self.is_paste_exists(paste['title']):
-            query = 'INSERT INTO paste (title, rating, popularity, url) VALUES (%s, %s, %s, %s)'
-            self.cursor.execute(query, (paste['title'], paste['rating'], paste['popularity'], paste['url']))
-            self.connection.commit()
-            return True
-        return False
+        query = 'INSERT INTO paste (title, rating, popularity, url) VALUES (%s, %s, %s, %s)'
+        self.cursor.execute(query, (paste['title'], paste['rating'], paste['popularity'], paste['url']))
+        self.connection.commit()
+        return True
 
     def get_random_paste(self):
         query = 'SELECT * FROM paste ORDER BY random() LIMIT 1'
@@ -69,6 +67,11 @@ class PostgresqlRepo:
 
     def get_all(self):
         query = 'SELECT * FROM paste'
+        self.cursor.execute(query)
+        return self.cursor.fetchall()
+
+    def get_top(self):
+        query = 'SELECT * FROM paste ORDER BY Rating DESC LIMIT 10'
         self.cursor.execute(query)
         return self.cursor.fetchall()
 
