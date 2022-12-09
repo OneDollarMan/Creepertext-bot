@@ -1,7 +1,7 @@
 appdirs==1.4.4
 beautifulsoup4==4.11.1
 bs4==0.0.1
-certifi==2022.6.15
+certifi==2022.12.7
 chardet==5.0.0
 distlib==0.3.5
 filelock==3.7.1
